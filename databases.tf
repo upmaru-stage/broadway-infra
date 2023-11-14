@@ -2,7 +2,7 @@
 
 module "aws_database_antares_xov" {
   source  = "upmaru/instellar/aws//modules/database"
-  version = "0.6.6"
+  version = "0.6.10"
 
   db_name             = "instellardb"
   db_size             = "db.t3.small"
