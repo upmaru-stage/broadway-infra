@@ -2,8 +2,9 @@
 
 module "aws_compute_antares_bcg" {
   source  = "upmaru/instellar/aws"
-  version = "0.6.10"
+  version = "0.7.3"
 
+  bastion_size = "t3a.micro"
   cluster_topology = [
   ]
 
