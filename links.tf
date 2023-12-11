@@ -38,3 +38,27 @@ module "instellar_link_antares_bcz" {
   provider_name         = "aws"
   slug                  = module.aws_database_antares_xov.identifier
 }
+
+module "instellar_link_orion_mhe" {
+  source  = "upmaru/bootstrap/instellar//modules/service"
+  version = "0.5.3"
+
+  channels = ["develop"]
+  cluster_ids = [
+    module.instellar_link_antares_qhb.cluster_id
+  ]
+  credential = {
+    host     = module.aws_bucket_orion_xri.host
+    password = module.aws_bucket_orion_xri.secret_access_key
+    port     = module.aws_bucket_orion_xri.port
+    resource = module.aws_bucket_orion_xri.region
+    username = module.aws_bucket_orion_xri.access_key_id
+    secure   = true
+  }
+
+  driver                = "bucket/aws-s3"
+  driver_version        = module.aws_bucket_orion_xri.version
+  insterra_component_id = 125
+  provider_name         = "aws"
+  slug                  = module.aws_bucket_orion_xri.identifier
+}
