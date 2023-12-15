@@ -18,3 +18,24 @@ module "aws_compute_antares_bcg" {
   vpc_id               = module.aws_networking_antares_uoo.vpc_id
   vpc_ip_range         = module.aws_networking_antares_uoo.vpc_ip_range
 }
+
+module "aws_compute_messier_ril" {
+  source  = "upmaru/instellar/aws"
+  version = "0.7.3"
+
+  bastion_size = "t3a.micro"
+  cluster_topology = [
+    { id = 1, name = "01", size = "t3a.medium" },
+    { id = 2, name = "02", size = "t3a.medium" },
+  ]
+
+  identifier           = "messier-ril"
+  network_dependencies = module.aws_networking_antares_uoo.dependencies
+  node_size            = "t3a.medium"
+  public_subnet_ids    = module.aws_networking_antares_uoo.public_subnet_ids
+  ssh_keys             = ["zack-studio"]
+  storage_size         = 40
+  volume_type          = "gp3"
+  vpc_id               = module.aws_networking_antares_uoo.vpc_id
+  vpc_ip_range         = module.aws_networking_antares_uoo.vpc_ip_range
+}
