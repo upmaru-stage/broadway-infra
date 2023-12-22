@@ -2,7 +2,7 @@
 
 module "aws_database_antares_xov" {
   source  = "upmaru/instellar/aws//modules/database"
-  version = "0.7.3"
+  version = "0.7.4"
 
   db_name             = "instellardb"
   db_size             = "db.t3.small"
@@ -12,6 +12,7 @@ module "aws_database_antares_xov" {
   engine_version      = "15"
   identifier          = "antares-xov"
   port                = 5432
+  region              = var.aws_region
   security_group_ids = [
     module.aws_compute_antares_bcg.nodes_security_group_id,
     module.aws_compute_messier_ril.nodes_security_group_id,

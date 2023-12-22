@@ -2,7 +2,7 @@
 
 module "aws_bucket_orion_xri" {
   source  = "upmaru/instellar/aws//modules/bucket"
-  version = "0.7.3"
+  version = "0.7.4"
 
   identifier = "orion-xri"
   region     = var.aws_region
