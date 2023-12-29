@@ -23,7 +23,8 @@ module "instellar_link_orion_mhe" {
 
   channels = ["develop"]
   cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id
+    module.instellar_link_antares_qhb.cluster_id,
+    module.instellar_link_pinwheel_gvs.cluster_id
   ]
   credential = {
     host     = module.aws_bucket_orion_xri.host
@@ -48,7 +49,8 @@ module "instellar_link_antares_bcz" {
   certificate = module.aws_database_antares_xov.certificate_url
   channels    = ["develop"]
   cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id
+    module.instellar_link_antares_qhb.cluster_id,
+    module.instellar_link_pinwheel_gvs.cluster_id
   ]
   credential = {
     host     = module.aws_database_antares_xov.address
@@ -64,4 +66,20 @@ module "instellar_link_antares_bcz" {
   insterra_component_id = 35
   provider_name         = "aws"
   slug                  = module.aws_database_antares_xov.identifier
+}
+
+module "instellar_link_pinwheel_gvs" {
+  source  = "upmaru/bootstrap/instellar"
+  version = "0.6.1"
+
+  bootstrap_node        = module.aws_compute_pinwheel_qvi.bootstrap_node
+  cluster_address       = module.aws_compute_pinwheel_qvi.cluster_address
+  cluster_name          = module.aws_compute_pinwheel_qvi.identifier
+  insterra_component_id = 131
+  kit_slug              = "pro"
+  nodes                 = module.aws_compute_pinwheel_qvi.nodes
+  password_token        = module.aws_compute_pinwheel_qvi.trust_token
+  provider_name         = "aws"
+  region                = var.aws_region
+  uplink_channel        = "develop"
 }
