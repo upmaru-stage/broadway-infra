@@ -15,9 +15,7 @@ module "aws_database_antares_xov" {
   region              = var.aws_region
   security_group_ids = [
     module.aws_compute_antares_bcg.nodes_security_group_id,
-    module.aws_compute_messier_ril.nodes_security_group_id,
-    module.aws_compute_antares_bcg.bastion_security_group_id,
-    module.aws_compute_messier_ril.bastion_security_group_id
+    module.aws_compute_antares_bcg.bastion_security_group_id
   ]
   skip_final_snapshot = false
   subnet_ids          = module.aws_networking_antares_uoo.public_subnet_ids
