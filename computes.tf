@@ -33,7 +33,7 @@ module "aws_compute_pinwheel_qvi" {
   network_dependencies = module.aws_networking_antares_uoo.dependencies
   node_size            = "t3a.medium"
   public_subnet_ids    = module.aws_networking_antares_uoo.public_subnet_ids
-  ssh_keys             = ["zack-studio"]
+  ssh_keys             = ["zack-studio", "zack-mbp"]
   storage_size         = 40
   volume_type          = "gp3"
   vpc_id               = module.aws_networking_antares_uoo.vpc_id
