@@ -16,32 +16,6 @@ module "instellar_link_antares_qhb" {
 
 }
 
-module "instellar_link_orion_mhe" {
-  source  = "upmaru/bootstrap/instellar//modules/service"
-  version = "0.6.1"
-
-
-  channels = ["develop"]
-  cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id,
-    module.instellar_link_pinwheel_gvs.cluster_id
-  ]
-  credential = {
-    host     = module.aws_bucket_orion_xri.host
-    password = module.aws_bucket_orion_xri.secret_access_key
-    port     = module.aws_bucket_orion_xri.port
-    resource = module.aws_bucket_orion_xri.region
-    username = module.aws_bucket_orion_xri.access_key_id
-    secure   = true
-  }
-
-  driver                = "bucket/aws-s3"
-  driver_version        = module.aws_bucket_orion_xri.version
-  insterra_component_id = 125
-  provider_name         = "aws"
-  slug                  = module.aws_bucket_orion_xri.identifier
-}
-
 module "instellar_link_antares_bcz" {
   source  = "upmaru/bootstrap/instellar//modules/service"
   version = "0.6.1"
@@ -49,8 +23,7 @@ module "instellar_link_antares_bcz" {
   certificate = module.aws_database_antares_xov.certificate_url
   channels    = ["develop"]
   cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id,
-    module.instellar_link_pinwheel_gvs.cluster_id
+    module.instellar_link_antares_qhb.cluster_id
   ]
   credential = {
     host     = module.aws_database_antares_xov.address
@@ -68,18 +41,27 @@ module "instellar_link_antares_bcz" {
   slug                  = module.aws_database_antares_xov.identifier
 }
 
-module "instellar_link_pinwheel_gvs" {
-  source  = "upmaru/bootstrap/instellar"
+module "instellar_link_orion_mhe" {
+  source  = "upmaru/bootstrap/instellar//modules/service"
   version = "0.6.1"
 
-  bootstrap_node        = module.aws_compute_pinwheel_qvi.bootstrap_node
-  cluster_address       = module.aws_compute_pinwheel_qvi.cluster_address
-  cluster_name          = module.aws_compute_pinwheel_qvi.identifier
-  insterra_component_id = 131
-  kit_slug              = "pro"
-  nodes                 = module.aws_compute_pinwheel_qvi.nodes
-  password_token        = module.aws_compute_pinwheel_qvi.trust_token
+
+  channels = ["develop"]
+  cluster_ids = [
+    module.instellar_link_antares_qhb.cluster_id
+  ]
+  credential = {
+    host     = module.aws_bucket_orion_xri.host
+    password = module.aws_bucket_orion_xri.secret_access_key
+    port     = module.aws_bucket_orion_xri.port
+    resource = module.aws_bucket_orion_xri.region
+    username = module.aws_bucket_orion_xri.access_key_id
+    secure   = true
+  }
+
+  driver                = "bucket/aws-s3"
+  driver_version        = module.aws_bucket_orion_xri.version
+  insterra_component_id = 125
   provider_name         = "aws"
-  region                = var.aws_region
-  uplink_channel        = "develop"
+  slug                  = module.aws_bucket_orion_xri.identifier
 }
