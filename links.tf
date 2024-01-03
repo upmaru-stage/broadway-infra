@@ -16,6 +16,22 @@ module "instellar_link_antares_qhb" {
 
 }
 
+module "instellar_link_deneb_rir" {
+  source  = "upmaru/bootstrap/instellar"
+  version = "0.6.1"
+
+  bootstrap_node        = module.aws_compute_deneb_ebf.bootstrap_node
+  cluster_address       = module.aws_compute_deneb_ebf.cluster_address
+  cluster_name          = module.aws_compute_deneb_ebf.identifier
+  insterra_component_id = 133
+  kit_slug              = "pro"
+  nodes                 = module.aws_compute_deneb_ebf.nodes
+  password_token        = module.aws_compute_deneb_ebf.trust_token
+  provider_name         = "aws"
+  region                = var.aws_region
+  uplink_channel        = "develop"
+}
+
 module "instellar_link_antares_bcz" {
   source  = "upmaru/bootstrap/instellar//modules/service"
   version = "0.6.1"
