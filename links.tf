@@ -16,29 +16,20 @@ module "instellar_link_antares_qhb" {
 
 }
 
-module "instellar_link_antares_bcz" {
-  source  = "upmaru/bootstrap/instellar//modules/service"
+module "instellar_link_deneb_rir" {
+  source  = "upmaru/bootstrap/instellar"
   version = "0.6.1"
 
-  certificate = module.aws_database_antares_xov.certificate_url
-  channels    = ["develop"]
-  cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id
-  ]
-  credential = {
-    host     = module.aws_database_antares_xov.address
-    password = module.aws_database_antares_xov.password
-    port     = module.aws_database_antares_xov.port
-    resource = module.aws_database_antares_xov.db_name
-    username = module.aws_database_antares_xov.username
-    secure   = true
-  }
-
-  driver                = "database/postgresql"
-  driver_version        = module.aws_database_antares_xov.engine_version
-  insterra_component_id = 35
+  bootstrap_node        = module.aws_compute_deneb_ebf.bootstrap_node
+  cluster_address       = module.aws_compute_deneb_ebf.cluster_address
+  cluster_name          = module.aws_compute_deneb_ebf.identifier
+  insterra_component_id = 133
+  kit_slug              = "pro"
+  nodes                 = module.aws_compute_deneb_ebf.nodes
+  password_token        = module.aws_compute_deneb_ebf.trust_token
   provider_name         = "aws"
-  slug                  = module.aws_database_antares_xov.identifier
+  region                = var.aws_region
+  uplink_channel        = "develop"
 }
 
 module "instellar_link_orion_mhe" {
@@ -48,7 +39,8 @@ module "instellar_link_orion_mhe" {
 
   channels = ["develop"]
   cluster_ids = [
-    module.instellar_link_antares_qhb.cluster_id
+    module.instellar_link_antares_qhb.cluster_id,
+    module.instellar_link_deneb_rir.cluster_id
   ]
   credential = {
     host     = module.aws_bucket_orion_xri.host
@@ -64,4 +56,30 @@ module "instellar_link_orion_mhe" {
   insterra_component_id = 125
   provider_name         = "aws"
   slug                  = module.aws_bucket_orion_xri.identifier
+}
+
+module "instellar_link_antares_bcz" {
+  source  = "upmaru/bootstrap/instellar//modules/service"
+  version = "0.6.1"
+
+  certificate = module.aws_database_antares_xov.certificate_url
+  channels    = ["develop"]
+  cluster_ids = [
+    module.instellar_link_antares_qhb.cluster_id,
+    module.instellar_link_deneb_rir.cluster_id
+  ]
+  credential = {
+    host     = module.aws_database_antares_xov.address
+    password = module.aws_database_antares_xov.password
+    port     = module.aws_database_antares_xov.port
+    resource = module.aws_database_antares_xov.db_name
+    username = module.aws_database_antares_xov.username
+    secure   = true
+  }
+
+  driver                = "database/postgresql"
+  driver_version        = module.aws_database_antares_xov.engine_version
+  insterra_component_id = 35
+  provider_name         = "aws"
+  slug                  = module.aws_database_antares_xov.identifier
 }
