@@ -7,7 +7,7 @@ module "aws_database_antares_xov" {
   db_name             = "instellardb"
   db_size             = "db.t3.small"
   db_username         = "instellar"
-  deletion_protection = true
+  deletion_protection = false
   engine              = "postgres"
   engine_version      = "15"
   identifier          = "antares-xov"
@@ -18,7 +18,7 @@ module "aws_database_antares_xov" {
     module.aws_compute_antares_bcg.bastion_security_group_id,
     module.aws_compute_deneb_ebf.nodes_security_group_id
   ]
-  skip_final_snapshot = false
+  skip_final_snapshot = true
   subnet_ids          = module.aws_networking_antares_uoo.public_subnet_ids
   vpc_id              = module.aws_networking_antares_uoo.vpc_id
 }
